@@ -1,7 +1,8 @@
 import pandas as pd
 import streamlit as st
 import pycountry as py
-from D_ChartDesign import design_chart2, design_chart3
+from D_ChartDesign import design_chart1, design_chart2
+from E_OtherFunctions import cost_impact
 
 
 def product_A():
@@ -42,6 +43,7 @@ def product_A():
         st.session_state.User_CatA_FG1 = st.session_state.get("User_CatA_FG1", 33.33)
         st.session_state.User_CatA_FG2 = st.session_state.get("User_CatA_FG2", 33.33)
         st.session_state.User_CatA_NI = st.session_state.get("User_CatA_NI", 33.33)
+        st.session_state.User_CatA_Cost_Impact = st.session_state.get('User_CatA_Cost_Impact', 0)
         
         st.header("Your Institution")
         st.write('You can leave unused rows as blank (with 0 values)')
@@ -57,7 +59,7 @@ def product_A():
             st.write('')
 
         with col1:
-            User_CatA_RM = st.number_input('% of cost stemming from products manufactured in US with imported Raw Materials', 
+            User_CatA_RM = st.number_input('% of cost stemming from products manufactured in the United States with **imported Raw Materials**', 
                                            min_value = 0.0, 
                                            max_value = 100.0, 
                                            value = st.session_state.get('User_CatA_RM', 33.3), 
@@ -65,14 +67,14 @@ def product_A():
             st.session_state.User_CatA_RM = User_CatA_RM
                         
         with col2:
-            User_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced by the manufacturing country',
+            User_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from manufacturing country**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('User_CatA_FG1', 33.3), 
                                            key = 'input_User_CatA_FG1')
             st.session_state.User_CatA_FG1 = User_CatA_FG1
 
         with col3:
-            User_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced from other countries',
+            User_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from other countries**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('User_CatA_FG2', 33.3), 
                                            key = 'input_User_CatA_FG2')
@@ -189,6 +191,38 @@ def product_A():
         
         st.write('')
         st.write('')
+
+        countries_forfunc = []
+        rm_forfunc = []
+        fg1_forfunc = []
+        fg2_forfunc = []
+
+        for count in range(num_rows):
+                key1 = f'Cat_A_User_country_{count}'
+                key2 = f'Cat_A_User_RM_{count}'
+                key3 = f'Cat_A_User_FG1_{count}'
+                key4 = f'Cat_A_User_FG2_{count}'
+                countries_forfunc.append(st.session_state.get(key1))
+                rm_forfunc.append(st.session_state.get(key2)/100)
+                fg1_forfunc.append(st.session_state.get(key3)/100)
+                fg2_forfunc.append(st.session_state.get(key4)/100)
+        
+        User_CatA_cost_weights = {
+            'raw_materials' : st.session_state.User_CatA_RM/100, 
+            'finished_goods_1' : st.session_state.User_CatA_FG1/100, 
+            'finished_goods_2' : st.session_state.User_CatA_FG2/100, 
+        }
+
+        User_CatA_cost_impact_items = {
+            'countries' : countries_forfunc,
+            'raw_materials' : rm_forfunc,
+            'finished_goods_1' : fg1_forfunc,
+            'finished_goods_2' : fg2_forfunc
+        }
+
+        User_CatA_Cost_Impact = cost_impact(User_CatA_cost_weights, User_CatA_cost_impact_items)
+        st.markdown(f'#### **COGS will increase by {User_CatA_Cost_Impact: .2f}%**')
+        
         
     with tab2:
         
@@ -213,7 +247,7 @@ def product_A():
             st.write('')
 
         with col1:
-            Comp1_CatA_RM = st.number_input('% of cost stemming from products manufactured in US with imported Raw Materials', 
+            Comp1_CatA_RM = st.number_input('% of cost stemming from products manufactured in the United States with **imported Raw Materials**', 
                                            min_value = 0.0, 
                                            max_value = 100.0, 
                                            value = st.session_state.get('Comp1_CatA_RM', 33.3), 
@@ -223,14 +257,14 @@ def product_A():
             
 
         with col2:
-            Comp1_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced by the manufacturing country',
+            Comp1_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from manufacturing country**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('Comp1_CatA_FG1', 33.3), 
                                            key = 'input_Comp1_CatA_FG1')
             st.session_state.Comp1_CatA_FG1 = Comp1_CatA_FG1
 
         with col3:
-            Comp1_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced from other countries',
+            Comp1_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from other countries**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('Comp1_CatA_FG2', 33.3), 
                                            key = 'input_Comp1_CatA_FG2')
@@ -353,7 +387,36 @@ def product_A():
         st.write('')
         st.write('')
         
-        col1, col2, col3, col4 = st.columns([1,1,1,1])
+        countries_forfunc = []
+        rm_forfunc = []
+        fg1_forfunc = []
+        fg2_forfunc = []
+
+        for count in range(num_rows):
+                key1 = f'Cat_A_Comp1_country_{count}'
+                key2 = f'Cat_A_Comp1_RM_{count}'
+                key3 = f'Cat_A_Comp1_FG1_{count}'
+                key4 = f'Cat_A_Comp1_FG2_{count}'
+                countries_forfunc.append(st.session_state.get(key1))
+                rm_forfunc.append(st.session_state.get(key2)/100)
+                fg1_forfunc.append(st.session_state.get(key3)/100)
+                fg2_forfunc.append(st.session_state.get(key4)/100)
+        
+        Comp1_CatA_cost_weights = {
+            'raw_materials' : st.session_state.Comp1_CatA_RM/100, 
+            'finished_goods_1' : st.session_state.Comp1_CatA_FG1/100, 
+            'finished_goods_2' : st.session_state.Comp1_CatA_FG2/100, 
+        }
+
+        Comp1_CatA_cost_impact_items = {
+            'countries' : countries_forfunc,
+            'raw_materials' : rm_forfunc,
+            'finished_goods_1' : fg1_forfunc,
+            'finished_goods_2' : fg2_forfunc
+        }
+
+        Comp1_CatA_Cost_Impact = cost_impact(Comp1_CatA_cost_weights, Comp1_CatA_cost_impact_items)
+        st.markdown(f'#### **COGS will increase by {Comp1_CatA_Cost_Impact: .2f}%**')
 
     with tab3:
         
@@ -378,7 +441,7 @@ def product_A():
             st.write('')
 
         with col1:
-            Comp2_CatA_RM = st.number_input('% of cost stemming from products manufactured in US with imported Raw Materials', 
+            Comp2_CatA_RM = st.number_input('% of cost stemming from products manufactured in the United States with **imported Raw Materials**', 
                                            min_value = 0.0, 
                                            max_value = 100.0, 
                                            value = st.session_state.get('Comp2_CatA_RM', 33.3), 
@@ -388,14 +451,14 @@ def product_A():
             
 
         with col2:
-            Comp2_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced by the manufacturing country',
+            Comp2_CatA_FG1 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from manufacturing country**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('Comp2_CatA_FG1', 33.3), 
                                            key = 'input_Comp2_CatA_FG1')
             st.session_state.Comp2_CatA_FG1 = Comp2_CatA_FG1
 
         with col3:
-            Comp2_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods whose raw materials are sourced from other countries',
+            Comp2_CatA_FG2 = st.number_input('% of cost stemming from imported Finished Goods (Raw Materials sourced **from other countries**)',
                                            min_value = 0.0, max_value = 100.0, 
                                            value = st.session_state.get('Comp2_CatA_FG2', 33.3), 
                                            key = 'input_Comp2_CatA_FG2')
@@ -518,9 +581,50 @@ def product_A():
         st.write('')
         st.write('')
 
+        countries_forfunc = []
+        rm_forfunc = []
+        fg1_forfunc = []
+        fg2_forfunc = []
+
+        for count in range(num_rows):
+                key1 = f'Cat_A_Comp2_country_{count}'
+                key2 = f'Cat_A_Comp2_RM_{count}'
+                key3 = f'Cat_A_Comp2_FG1_{count}'
+                key4 = f'Cat_A_Comp2_FG2_{count}'
+                countries_forfunc.append(st.session_state.get(key1))
+                rm_forfunc.append(st.session_state.get(key2)/100)
+                fg1_forfunc.append(st.session_state.get(key3)/100)
+                fg2_forfunc.append(st.session_state.get(key4)/100)
+        
+        Comp2_CatA_cost_weights = {
+            'raw_materials' : st.session_state.Comp2_CatA_RM/100, 
+            'finished_goods_1' : st.session_state.Comp2_CatA_FG1/100, 
+            'finished_goods_2' : st.session_state.Comp2_CatA_FG2/100, 
+        }
+
+        Comp2_CatA_cost_impact_items = {
+            'countries' : countries_forfunc,
+            'raw_materials' : rm_forfunc,
+            'finished_goods_1' : fg1_forfunc,
+            'finished_goods_2' : fg2_forfunc
+        }
+
+        Comp2_CatA_Cost_Impact = cost_impact(Comp2_CatA_cost_weights, Comp2_CatA_cost_impact_items)
+        st.markdown(f'#### **COGS will increase by {Comp2_CatA_Cost_Impact: .2f}%**')
+
+
     with tab4:
-        design_chart2()
+        design_chart1(User_CatA_Cost_Impact, Comp1_CatA_Cost_Impact, Comp2_CatA_Cost_Impact)
         st.write('')
-        design_chart3()
+        bubble_chart_data = {
+            'Manufacturer' : ['Your institution', 'Competitor 1', 'Competitor 2'],
+            'Market Share' : [st.session_state.Cat_A_User_Mkt_Share, st.session_state.Cat_A_Comp1_Mkt_Share, st.session_state.Cat_A_Comp2_Mkt_Share],
+            'COGS' : [st.session_state.Cat_A_User_COGS/100, st.session_state.Cat_A_Comp1_COGS/100, st.session_state.Cat_A_Comp2_COGS/100],
+            'Tariff Impact' : [User_CatA_Cost_Impact/100, Comp1_CatA_Cost_Impact/100, Comp2_CatA_Cost_Impact/100]
+        }
+
+        st.write('')
+        st.write('#### Visual comparison of Tariff Impact, Cost of Goods Sold, and Market Share')
+        design_chart2(bubble_chart_data)
         
         

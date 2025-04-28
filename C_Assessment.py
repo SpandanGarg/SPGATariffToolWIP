@@ -81,14 +81,14 @@ def assessment():
         st.write('')
         st.write('')
         st.write('')
-        st.write('Competitor 1 product data:')
+        st.write('Competitor 1:')
         st.write('')
         st.write('')
         st.write('')
-        st.write('Competitor 2 product data:')
+        st.write('Competitor 2:')
     
     with col2:
-        Cat_A_User_Mkt_Share = st.number_input('Market share (%)', 
+        Cat_A_User_Mkt_Share = st.number_input('Mkt share (%)', 
                                                value = st.session_state.get('Cat_A_User_Mkt_Share', 33.3), 
                                                min_value=0.00, 
                                                max_value=100.00,
@@ -151,7 +151,7 @@ def assessment():
         st.session_state['Cat_A_Comp2_COGS'] = Cat_A_Comp2_COGS
     
     with col5:
-        Cat_B_User_Mkt_Share = st.number_input('Market share (%)', 
+        Cat_B_User_Mkt_Share = st.number_input('Mkt share (%)', 
                                                value = st.session_state.get('Cat_B_User_Mkt_Share', 33.3), 
                                                min_value=0.00, 
                                                max_value=100.00,
@@ -214,7 +214,7 @@ def assessment():
         st.session_state['Cat_B_Comp2_COGS'] = Cat_B_Comp2_COGS
 
     with col8:
-        Cat_C_User_Mkt_Share = st.number_input('Market share (%)', 
+        Cat_C_User_Mkt_Share = st.number_input('Mkt share (%)', 
                                                value = st.session_state.get('Cat_C_User_Mkt_Share', 33.3), 
                                                min_value=0.00, 
                                                max_value=100.00,

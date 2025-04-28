@@ -9,7 +9,7 @@ def home_page():
         unsafe_allow_html=True,
     )
     st.markdown("<h3 style='font-size:18px;'>Please provide the following information prior to getting started</h3>", unsafe_allow_html=True)
-
+    
     col1, col2 = st.columns([1, 3])
     with col1:
         st.write('')
@@ -24,6 +24,7 @@ def home_page():
     with col2:
         respondent_name = st.text_input('', key='input_respondent_name_key')
         respondent_company = st.text_input('', key='input_respondent_company_key')
+
 
     col1, col2 = st.columns([1, 3])
     with col1:

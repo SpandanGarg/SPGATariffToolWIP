@@ -35,7 +35,7 @@ def product_A():
 
     st.image("Pictures/SK_logo.png", width=200)
     
-    tab1, tab2, tab3, tab4 = st.tabs(["Your Institution ", "Competitor 1 ", "Competitor 2 ", "Actions to consider"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Your Institution ", "Competitor 1 ", "Competitor 2 ", "Impact and Potential Actions"])
 
     with tab1:
         
@@ -614,17 +614,23 @@ def product_A():
 
 
     with tab4:
-        design_chart1(User_CatA_Cost_Impact, Comp1_CatA_Cost_Impact, Comp2_CatA_Cost_Impact)
-        st.write('')
+              
         bubble_chart_data = {
             'Manufacturer' : ['Your institution', 'Competitor 1', 'Competitor 2'],
-            'Market Share' : [st.session_state.Cat_A_User_Mkt_Share, st.session_state.Cat_A_Comp1_Mkt_Share, st.session_state.Cat_A_Comp2_Mkt_Share],
+            'Market Share' : [st.session_state.Cat_A_User_Mkt_Share/100, st.session_state.Cat_A_Comp1_Mkt_Share/100, st.session_state.Cat_A_Comp2_Mkt_Share/100],
             'COGS' : [st.session_state.Cat_A_User_COGS/100, st.session_state.Cat_A_Comp1_COGS/100, st.session_state.Cat_A_Comp2_COGS/100],
             'Tariff Impact' : [User_CatA_Cost_Impact/100, Comp1_CatA_Cost_Impact/100, Comp2_CatA_Cost_Impact/100]
         }
 
-        st.write('')
         st.write('#### Visual comparison of Tariff Impact, Cost of Goods Sold, and Market Share')
         design_chart2(bubble_chart_data)
-        
+
+        st.write('')
+        st.write('')
+        st.write('')
+        st.write('')
+
+        st.write('#### Overview of potential price actions relative to competitors')
+        st.write('')
+        design_chart1(User_CatA_Cost_Impact, Comp1_CatA_Cost_Impact, Comp2_CatA_Cost_Impact)
         

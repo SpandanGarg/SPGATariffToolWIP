@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import math
 
 
   
@@ -64,6 +65,13 @@ def design_chart2(data):
     
     df = pd.DataFrame(data)
 
+    x_max = df['COGS'].max() * 1.1
+    y_max = df['Tariff Impact'].max() * 1.1
+
+    # Optionally round up to nearest 10
+    x_max = math.ceil(x_max / 10) * 10
+    y_max = math.ceil(y_max / 10) * 10
+
     # Plotly bubble chart
     fig = px.scatter(
         df,
@@ -78,8 +86,8 @@ def design_chart2(data):
     fig.update_layout(
         width=800,  # Fixed width
         height=600,  # Optional: adjust height too
-        xaxis=dict(range=[0, 0.8], tickformat=".0%", title="COGS (%)"),
-        yaxis=dict(range=[0, 0.3], tickformat=".0%", title="Tariff Impact (%)")
+        xaxis=dict(range=[0, x_max], tickformat=".0%", title="COGS (%)"),
+        yaxis=dict(range=[0, y_max], tickformat=".0%", title="Tariff Impact (%)")
     )
 
     # Streamlit display

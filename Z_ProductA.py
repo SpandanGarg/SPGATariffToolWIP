@@ -39,10 +39,10 @@ def product_A():
 
     with tab1:
         
-        st.session_state.User_CatA_RM = st.session_state.get("User_CatA_RM", 33.33)
-        st.session_state.User_CatA_FG1 = st.session_state.get("User_CatA_FG1", 33.33)
-        st.session_state.User_CatA_FG2 = st.session_state.get("User_CatA_FG2", 33.33)
-        st.session_state.User_CatA_NI = st.session_state.get("User_CatA_NI", 33.33)
+        st.session_state.User_CatA_RM = st.session_state.get("User_CatA_RM", 25.0)
+        st.session_state.User_CatA_FG1 = st.session_state.get("User_CatA_FG1", 25.0)
+        st.session_state.User_CatA_FG2 = st.session_state.get("User_CatA_FG2", 25.0)
+        st.session_state.User_CatA_NI = st.session_state.get("User_CatA_NI", 25.0)
         st.session_state.User_CatA_Cost_Impact = st.session_state.get('User_CatA_Cost_Impact', 0)
         
         st.header("Your Institution")
@@ -226,10 +226,10 @@ def product_A():
         
     with tab2:
         
-        st.session_state.Comp1_CatA_RM = st.session_state.get("Comp1_CatA_RM", 33.33)
-        st.session_state.Comp1_CatA_FG1 = st.session_state.get("Comp1_CatA_FG1", 33.33)
-        st.session_state.Comp1_CatA_FG2 = st.session_state.get("Comp1_CatA_FG2", 33.33)
-        st.session_state.Comp1_CatA_NI = st.session_state.get("Comp1_CatA_NI", 33.33)
+        st.session_state.Comp1_CatA_RM = st.session_state.get("Comp1_CatA_RM", 25.0)
+        st.session_state.Comp1_CatA_FG1 = st.session_state.get("Comp1_CatA_FG1", 25.0)
+        st.session_state.Comp1_CatA_FG2 = st.session_state.get("Comp1_CatA_FG2", 25.0)
+        st.session_state.Comp1_CatA_NI = st.session_state.get("Comp1_CatA_NI", 25.0)
         
         
         st.header("Competitor 1")
@@ -420,10 +420,10 @@ def product_A():
 
     with tab3:
         
-        st.session_state.Comp2_CatA_RM = st.session_state.get("Comp2_CatA_RM", 33.33)
-        st.session_state.Comp2_CatA_FG1 = st.session_state.get("Comp2_CatA_FG1", 33.33)
-        st.session_state.Comp2_CatA_FG2 = st.session_state.get("Comp2_CatA_FG2", 33.33)
-        st.session_state.Comp2_CatA_NI = st.session_state.get("Comp2_CatA_NI", 33.33)
+        st.session_state.Comp2_CatA_RM = st.session_state.get("Comp2_CatA_RM", 25.0)
+        st.session_state.Comp2_CatA_FG1 = st.session_state.get("Comp2_CatA_FG1", 25.0)
+        st.session_state.Comp2_CatA_FG2 = st.session_state.get("Comp2_CatA_FG2", 25.0)
+        st.session_state.Comp2_CatA_NI = st.session_state.get("Comp2_CatA_NI", 25.0)
         
         
         st.header("Competitor 2")

@@ -65,8 +65,8 @@ def design_chart2(data):
     
     df = pd.DataFrame(data)
 
-    x_max = df['COGS'].max() * 1.1
-    y_max = df['Tariff Impact'].max() * 1.1
+    x_max = df['COGS'].max() * 1.1 / 100
+    y_max = df['Tariff Impact'].max() * 1.1 / 100
 
     # Optionally round up to nearest 10
     x_max = math.ceil(x_max / 10) * 10

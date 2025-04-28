@@ -24,23 +24,23 @@ def design_chart1(User_TI, Comp1_TI, Comp2_TI):
 
     
     if Comp1_TI <= 2:
-        row_choice_comp1 = 1
+        row_choice_comp1 = 3
     
     elif Comp1_TI >2 and Comp1_TI <=7:
         row_choice_comp1 = 2
 
     else:
-        row_choice_comp1 = 3
+        row_choice_comp1 = 1
 
     
     if Comp2_TI <= 2:
-        row_choice_comp2 = 1
+        row_choice_comp2 = 3
     
     elif Comp2_TI > 2 and Comp2_TI <=7:
         row_choice_comp2 = 2
 
     else:
-        row_choice_comp2 = 3
+        row_choice_comp2 = 1
 
 
     if max(base_values) == 0:
